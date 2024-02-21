@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/21 13:29:47 by avaldin          ###   ########.fr       */
+/*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
+/*   Updated: 2024/02/21 13:29:05 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#include "../header/philo.h"
 
-# include <pthread.h>
-# include <stdio.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include <sys/time.h>
-# include <unistd.h>
-
-# define DEAD 0
-# define ALIVE 1
-
-typedef	struct s_data
+void	init_philo(int nb)
 {
-	struct timeval	time;
-	bool			status;
-	pthread_t		*philo;
-	pthread_mutex_t *fork;
 
-};
+}
 
+int main(int argc, char **argv)
+{
+	t_data	*data;
 
-#endif
+	//parcing;
+	//init;
+	//while (status)
+
+}
