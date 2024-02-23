@@ -6,23 +6,28 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/21 13:29:05 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/23 12:10:23 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
+#include <stdlib.h>
 
-void	init_philo(int nb)
-{
-
-}
 
 int main(int argc, char **argv)
 {
+	(void)argc;
+	(void)argv;
+
 	t_data	*data;
-
+	bool	*status;
 	//parcing;
-	//init;
+	data = init(argv);
 	//while (status)
+	status = data->status;
+	while (*status)
+	{
 
+	}
+	return (0);
 }

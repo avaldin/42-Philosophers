@@ -6,8 +6,13 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:52:29 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/21 13:52:29 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/23 12:11:43 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
+
+void	pars_data(t_data *data, char **argv)
+{
+	data->p_count = ft_atoi()
+}

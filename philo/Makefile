@@ -6,7 +6,7 @@
 #    By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 15:30:58 by avaldin           #+#    #+#              #
-#    Updated: 2024/02/21 11:30:02 by avaldin          ###   ########.fr        #
+#    Updated: 2024/02/23 11:09:14 by avaldin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,13 @@ OBJ_PATH	=	obj
 
 		##		SOURCES_FILES		##
 
-SOURCES		=
+SOURCES		=	src/main.c\
+				src/parcing.c\
+				src/process.c\
+				src/security.c\
+				src/libft/ft_atoi.c\
 
-HEADER		=	header/
+HEADER		=	header/philo.h\
 
 		##		OBJECTS				##
 
