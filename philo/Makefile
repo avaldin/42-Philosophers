@@ -6,14 +6,14 @@
 #    By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 15:30:58 by avaldin           #+#    #+#              #
-#    Updated: 2024/02/23 11:09:14 by avaldin          ###   ########.fr        #
+#    Updated: 2024/02/24 17:43:52 by avaldin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 		##		COMPILATION			##
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror -g3 -O3
+FLAGS		=	-Wall -Wextra -Werror -D_REENTRANT -g3
 
 		##		EXECUTABLE			##
 
@@ -46,7 +46,7 @@ all			:	$(NAME)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME)		:	$(OBJS) Makefile
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) $(OBJS) -o $(NAME) -lpthread
 
 clean		:
 	rm -f $(OBJS)
