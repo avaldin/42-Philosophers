@@ -6,40 +6,44 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/24 18:44:07 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/24 20:40:17 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
+void	philosofree(t_philo *philo)
+{
+	t_philo	*next;
+
+	while (philo)
+	{
+		next = NULL;
+		if (philo->next)
+			next = philo->next;
+		free(philo);
+		philo = next;
+	}
+}
+
 void	clean_exit(t_data *data)
 {
-	//int i;
 
-	//i = 0;
-	if (data && data->philo)
-	{
-//		while (data->philo[i] && i < data->p_count)
-//		{
-//			if (pthread_join(data->philo[i], NULL))
-//				perror("pthread_join failed");
-//			i++;
-//		}
-		free(data->philo);
-	}
+	philosofree(data->p_first);
+	//fork_free;
 	free(data);
+	perror(errno);
 	exit(2);
 }
 
-t_philo	**init_philo(t_data *data)
+void	init_philo(t_data *data)
 {
-	t_philo	**p_first;
 	t_philo	*philo;
 	t_philo	*p_prev;
 	int 	i;
 
 	i = 0;
-	p_first = &philo;
+	data->p_first = NULL;
 	while (i < data->p_count)
 	{
 		philo = NULL;
@@ -50,25 +54,28 @@ t_philo	**init_philo(t_data *data)
 		philo->status = ALIVE;
 		if (i)
 			p_prev->next = philo;
+		else
+			data->p_first = philo;
 		p_prev = philo;
 		philo = philo->next;
 		i++;
 	}
-	p_prev->next = *p_first;
-	return (p_first);
+	p_prev->next = data->p_first;
 }
 
 t_data	*init(char **argv)
 {
 	t_data		*data;
-	t_philo		*philo;
 
 	data = NULL;
 	data = malloc(sizeof(t_data));
 	if (!data)
-		clean_exit(data);
+	{
+		perror("data malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
 	pars_data(data, argv);
-	data->p_first = init_philo(data);
+	init_philo(data);
 	if (!data->p_first)
 		clean_exit(data);
 //	data->fork = malloc(sizeof(pthread_mutex_t) * data->p_count);

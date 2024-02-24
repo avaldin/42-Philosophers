@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:52:29 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/23 12:24:39 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/24 20:29:12 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	pars_data(t_data *data, char **argv)
 {
 	data->p_count = ft_atoi(argv[1]);
 	data->t_die = ft_atoi(argv[2]);
-	data->t_die = ft_atoi(argv[3]);
+	data->t_eat = ft_atoi(argv[3]);
 	data->t_sleep = ft_atoi(argv[4]);
+	if (data->p_count < 1 || data->t_die < 1 || data->t_eat < 0 || data->t_sleep < 0)
+		clean_exit(data);
 }

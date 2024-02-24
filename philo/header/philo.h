@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/24 18:44:07 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/24 20:40:44 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <errno.h>
 
 # define DEAD 0
 # define ALIVE 1
@@ -42,12 +43,14 @@ typedef	struct s_data
 	int 			t_die;
 	int 			t_sleep;
 	int 			t_eat;
-	struct s_philo	**p_first;
+	struct s_philo	*p_first;
 }						t_data;
 
 t_data	*init(char **argv);
 void	pars_data(t_data *data, char **argv);
 int		ft_atoi(const char *nptr);
+void	clean_exit(t_data *data);
+
 
 
 #endif
