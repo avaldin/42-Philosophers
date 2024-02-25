@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/24 20:25:27 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/25 11:15:43 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int main(int argc, char **argv)
 	data = init(argv);
 	if (!data)
 		clean_exit(data);
+	clean_exit(data);
 	print_philo(data->p_first);
 	//if (pthread_create(&data->philo[0], 0, loop, &data))
 

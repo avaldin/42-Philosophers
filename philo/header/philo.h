@@ -20,7 +20,6 @@
 # include <sys/time.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include <errno.h>
 
 # define DEAD 0
 # define ALIVE 1
@@ -32,7 +31,7 @@ typedef struct	s_philo
 	int				p_num;
 	pthread_t		*philo;
 	bool			status;
-	pthread_mutex_t fork[2];
+	pthread_mutex_t fork;
 	struct s_philo	*next;
 }						t_philo;
 

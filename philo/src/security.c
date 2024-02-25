@@ -6,33 +6,33 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/24 20:40:17 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/25 11:24:17 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	philosofree(t_philo *philo)
+void	philosofree(t_philo *philo, int p_count)
 {
 	t_philo	*next;
+	int 	i;
 
-	while (philo)
+	i = 0;
+	while (i < p_count)
 	{
-		next = NULL;
-		if (philo->next)
-			next = philo->next;
+		next = philo->next;
 		free(philo);
 		philo = next;
+		i++;
 	}
 }
 
 void	clean_exit(t_data *data)
 {
 
-	philosofree(data->p_first);
+	philosofree(data->p_first, data->p_count);
 	//fork_free;
 	free(data);
-	perror(errno);
 	exit(2);
 }
 
@@ -71,7 +71,7 @@ t_data	*init(char **argv)
 	data = malloc(sizeof(t_data));
 	if (!data)
 	{
-		perror("data malloc failed\n");
+		printf("data malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 	pars_data(data, argv);
