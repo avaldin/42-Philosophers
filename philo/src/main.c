@@ -6,67 +6,58 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/25 11:15:43 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/25 14:33:49 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 #include <stdlib.h>
 
-void	print_philo(t_philo *first)
+void	thrend(t_data *data)
 {
 	t_philo	*philo;
+	int 	i;
 
-	philo = first;
-	if (!philo)
-		exit(5);
-	printf("philo n%d, status = %d \n", philo->p_num, philo->status);
-	if (!philo->next)
-		exit(6);
-	philo = philo->next;
-	while (philo != first)
+	i = data->c_philo;
+	philo = data->p_first;
+	while (i > 0)
 	{
-		printf("philo n%d, status = %d \n", philo->p_num, philo->status);
+		pthread_join(*philo->philo, NULL);
+		i++;
+		philo = philo->next;
+	}
+	i = data->c_philo;
+	while (i > 0)
+	{
+		pthread_mutex_destroy(philo->fork);
+		i++;
 		philo = philo->next;
 	}
 }
 
-//void *loop(void *data)
-//{
-//	while (((t_data *)data)->status)
-//	{
-//		usleep(100000);
-//	}
-//	pthread_mutex_lock((pthread_mutex_t)fork[0]);
-//	pthread_mutex_unlock(&((t_data *)data)->fork[0]);
-
-//	return (args);
-//}
-
 int main(int argc, char **argv)
 {
 	t_data	*data;
+	t_philo	*philo;
+	bool	*status;
 
-	if (argc != 5)
+	if (argc < 5 || argc > 6)
 		return (-1);
 	data = NULL;
-	data = init(argv);
+	data = init(argv, argc);
 	if (!data)
 		clean_exit(data);
-	clean_exit(data);
-	print_philo(data->p_first);
-	//if (pthread_create(&data->philo[0], 0, loop, &data))
-
-	//while (status)
-	//pthread_join(philo, NULL);
-	//sleep(2);
-//	while (*status)
-//	{
-//
-//	}
-//  msg die //// ou pas de while et que des join.
-//
-//
+	philo = data->p_first;
+	status = &data->status;
+	start(data);
+	while (*status == ALIVE)
+	{
+		if (philo->p_status == DEAD)
+			*status = DEAD;
+		else
+			philo = philo->next;
+	}
+	thrend(data);
 	return (0);
 }
 

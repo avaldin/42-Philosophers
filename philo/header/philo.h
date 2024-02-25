@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/24 20:40:44 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/25 14:29:19 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,32 @@
 typedef struct	s_philo
 {
 	int				p_num;
+	int 			*last_eat;
 	pthread_t		*philo;
-	bool			status;
-	pthread_mutex_t fork;
+	bool			p_status;
+	bool			*f_status;
+	pthread_mutex_t *fork;
 	struct s_philo	*next;
+	struct s_data	*data;
 }						t_philo;
 
 typedef	struct s_data
 {
 	struct timeval	*time;
-	int 			p_count;
+	int 			t_start;
+	int 			c_philo;
+	int 			c_end;
 	int 			t_die;
 	int 			t_sleep;
 	int 			t_eat;
+	bool			status;
 	struct s_philo	*p_first;
 }						t_data;
 
-t_data	*init(char **argv);
-void	pars_data(t_data *data, char **argv);
+t_data	*init(char **argv, int argc);
+void	pars_data(t_data *data, char **argv, int argc);
 int		ft_atoi(const char *nptr);
 void	clean_exit(t_data *data);
-
-
+void	start(t_data *data);
 
 #endif

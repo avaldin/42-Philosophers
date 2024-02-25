@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/25 11:24:17 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/25 14:35:09 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	philosofree(t_philo *philo, int p_count)
 	while (i < p_count)
 	{
 		next = philo->next;
+		pthread_mutex_destroy(philo->fork);
 		free(philo);
 		philo = next;
 		i++;
@@ -30,7 +31,7 @@ void	philosofree(t_philo *philo, int p_count)
 void	clean_exit(t_data *data)
 {
 
-	philosofree(data->p_first, data->p_count);
+	philosofree(data->p_first, data->c_philo);
 	//fork_free;
 	free(data);
 	exit(2);
@@ -44,14 +45,17 @@ void	init_philo(t_data *data)
 
 	i = 0;
 	data->p_first = NULL;
-	while (i < data->p_count)
+	while (i < data->c_philo)
 	{
-		philo = NULL;
 		philo = malloc(sizeof(t_philo));
 		if (!philo)
 			clean_exit(data);
+		philo->fork = malloc(sizeof(pthread_mutex_t));
 		philo->p_num = i;
-		philo->status = ALIVE;
+		philo->p_status = ALIVE;
+		pthread_mutex_init(philo->fork, NULL);
+		philo->f_status = 1;
+		philo->data = data;
 		if (i)
 			p_prev->next = philo;
 		else
@@ -63,7 +67,7 @@ void	init_philo(t_data *data)
 	p_prev->next = data->p_first;
 }
 
-t_data	*init(char **argv)
+t_data	*init(char **argv, int argc)
 {
 	t_data		*data;
 
@@ -74,10 +78,11 @@ t_data	*init(char **argv)
 		printf("data malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
-	pars_data(data, argv);
+	pars_data(data, argv, argc);
 	init_philo(data);
 	if (!data->p_first)
 		clean_exit(data);
+	data->status = ALIVE;
 //	data->fork = malloc(sizeof(pthread_mutex_t) * data->p_count);
 	return (data);
 }
