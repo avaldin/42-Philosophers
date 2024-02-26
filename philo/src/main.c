@@ -6,12 +6,23 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/25 14:33:49 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/26 10:58:21 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
-#include <stdlib.h>
+
+int my_gettimeofday(struct timeval *tv)
+{
+	if (!gettimeofday(tv, NULL))
+	{
+		//long x = tv->tv_usec;
+		tv->tv_usec = tv->tv_usec / 1000 + tv->tv_sec * 1000;
+		//printf("seconde %ld final time %ld time base %ld\n",tv->tv_sec, tv->tv_usec, x);
+		return (0);
+	}
+	return (-1);
+}
 
 void	thrend(t_data *data)
 {
@@ -22,7 +33,7 @@ void	thrend(t_data *data)
 	philo = data->p_first;
 	while (i > 0)
 	{
-		pthread_join(*philo->philo, NULL);
+		pthread_join(philo->philo, NULL);
 		i++;
 		philo = philo->next;
 	}

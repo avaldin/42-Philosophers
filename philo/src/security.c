@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/25 14:35:09 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/26 09:37:57 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	init_philo(t_data *data)
 	int 	i;
 
 	i = 0;
-	data->p_first = NULL;
 	while (i < data->c_philo)
 	{
 		philo = malloc(sizeof(t_philo));
 		if (!philo)
 			clean_exit(data);
+		ft_bzero(philo, sizeof(t_philo));
 		philo->fork = malloc(sizeof(pthread_mutex_t));
 		philo->p_num = i;
 		philo->p_status = ALIVE;
@@ -78,6 +78,8 @@ t_data	*init(char **argv, int argc)
 		printf("data malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
+	ft_bzero(data, sizeof(t_data));
+	data->time = malloc(sizeof(struct timeval));
 	pars_data(data, argv, argc);
 	init_philo(data);
 	if (!data->p_first)

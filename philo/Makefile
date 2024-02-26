@@ -6,7 +6,7 @@
 #    By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 15:30:58 by avaldin           #+#    #+#              #
-#    Updated: 2024/02/24 17:43:52 by avaldin          ###   ########.fr        #
+#    Updated: 2024/02/26 09:30:24 by avaldin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SOURCES		=	src/main.c\
 				src/process.c\
 				src/security.c\
 				src/libft/ft_atoi.c\
+				src/libft/ft_bzero.c\
 
 HEADER		=	header/philo.h\
 
