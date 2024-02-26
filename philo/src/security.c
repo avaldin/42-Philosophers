@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 09:37:57 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/26 11:43:48 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ void	init_philo(t_data *data)
 		ft_bzero(philo, sizeof(t_philo));
 		philo->fork = malloc(sizeof(pthread_mutex_t));
 		philo->p_num = i;
-		philo->p_status = ALIVE;
+		philo->p_status = DEAD;
 		pthread_mutex_init(philo->fork, NULL);
-		philo->f_status = 1;
 		philo->data = data;
 		if (i)
 			p_prev->next = philo;
@@ -85,6 +84,5 @@ t_data	*init(char **argv, int argc)
 	if (!data->p_first)
 		clean_exit(data);
 	data->status = ALIVE;
-//	data->fork = malloc(sizeof(pthread_mutex_t) * data->p_count);
 	return (data);
 }

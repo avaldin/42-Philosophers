@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 10:58:21 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/26 11:36:36 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ int my_gettimeofday(struct timeval *tv)
 {
 	if (!gettimeofday(tv, NULL))
 	{
-		//long x = tv->tv_usec;
 		tv->tv_usec = tv->tv_usec / 1000 + tv->tv_sec * 1000;
-		//printf("seconde %ld final time %ld time base %ld\n",tv->tv_sec, tv->tv_usec, x);
 		return (0);
 	}
 	return (-1);
@@ -49,8 +47,6 @@ void	thrend(t_data *data)
 int main(int argc, char **argv)
 {
 	t_data	*data;
-	t_philo	*philo;
-	bool	*status;
 
 	if (argc < 5 || argc > 6)
 		return (-1);
@@ -58,16 +54,7 @@ int main(int argc, char **argv)
 	data = init(argv, argc);
 	if (!data)
 		clean_exit(data);
-	philo = data->p_first;
-	status = &data->status;
 	start(data);
-	while (*status == ALIVE)
-	{
-		if (philo->p_status == DEAD)
-			*status = DEAD;
-		else
-			philo = philo->next;
-	}
 	thrend(data);
 	return (0);
 }

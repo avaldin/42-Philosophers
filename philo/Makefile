@@ -29,6 +29,7 @@ OBJ_PATH	=	obj
 SOURCES		=	src/main.c\
 				src/parcing.c\
 				src/process.c\
+				src/process_2.c\
 				src/security.c\
 				src/libft/ft_atoi.c\
 				src/libft/ft_bzero.c\

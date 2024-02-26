@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 10:21:27 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/26 11:43:48 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_philo
 	long 			last_eat;
 	pthread_t		philo;
 	bool			p_status;
-	bool			f_status;
 	pthread_mutex_t *fork;
 	struct s_philo	*next;
 	struct s_data	*data;
@@ -49,6 +48,7 @@ typedef	struct s_data
 	int 			t_sleep;
 	int 			t_eat;
 	bool			status;
+	pthread_mutex_t init;
 	struct s_philo	*p_first;
 }						t_data;
 
@@ -60,5 +60,7 @@ t_data	*init(char **argv, int argc);
 void	clean_exit(t_data *data);
 void	start(t_data *data);
 int 	my_gettimeofday(struct timeval *tv);
+void	wait_all_thread(t_data *data);
+long	take_forks(int p_num, pthread_mutex_t *first_f, pthread_mutex_t *second_f, t_data *data);
 
 #endif
