@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 11:30:06 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:10:34 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 typedef struct	s_philo
 {
 	int				p_num;
+	int 			eat_c;
 	long 			last_eat;
 	pthread_t		philo;
 	bool			p_status;

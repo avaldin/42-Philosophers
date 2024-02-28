@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 16:13:00 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:19:16 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	eat(t_philo *philo, long eating_time)
 		give_back_forks(philo, philo->data);
 		return (-1);
 	}
-	printf("%ld %d is eating, last eat = %ld\n", eating_time, philo->p_num + 1, my_gettimeofday(philo->data->time, philo->data->t_start) - philo->last_eat);
+	printf("%ld %d is eating\n", eating_time, philo->p_num + 1);
+	philo->eat_c
 	philo->last_eat = eating_time;
 	usleep(1000 * philo->data->t_eat);
 	give_back_forks(philo, philo->data);
@@ -84,7 +85,6 @@ void	*life(void *arg)
 			return (DEAD);
 		if (sleep_n_think(philo, data) == -1)
 			return (DEAD);
-		printf("inf = %ld, supp = %d\n", my_gettimeofday(data->time, data->t_start) - philo->last_eat, data->t_eat * 2);
 		usleep(500);
 	}
 }
