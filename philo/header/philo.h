@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 09:18:16 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/28 11:30:06 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ void	clean_exit(t_data *data);
 void	start(t_data *data);
 long 	my_gettimeofday(struct timeval *tv, long t_start);
 void	wait_all_thread(t_data *data);
-long	take_forks(int p_num, pthread_mutex_t *first_f, pthread_mutex_t *second_f, t_data *data);
+long	take_forks(t_philo *philo, t_data *data);
+bool	is_dead(t_philo *philo, t_data *data);
+void 	*let_him_die(t_philo *philo, t_data *data);
+long	give_back_forks(t_philo *philo, t_data *data);
+
 
 #endif

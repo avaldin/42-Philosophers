@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 10:16:36 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/28 12:01:10 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void	thrend(t_data *data)
 	while (i > 0)
 	{
 		pthread_join(philo->philo, NULL);
-		i++;
+		i--;
 		philo = philo->next;
 	}
 	i = data->c_philo;
 	while (i > 0)
 	{
 		pthread_mutex_destroy(philo->fork);
-		i++;
+		i--;
 		philo = philo->next;
 	}
 }
