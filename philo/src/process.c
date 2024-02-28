@@ -6,40 +6,48 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 16:41:35 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/28 10:23:48 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-long	eat(t_philo *philo, long last_eat)
+void	eat(t_philo *philo)
 {
 	if (!philo->p_num % 2)
-		last_eat = take_forks(philo->p_num, philo->next->fork, philo->fork, philo->data);
+		philo->last_eat = take_forks(philo->p_num, philo->next->fork, philo->fork, philo->data);
 	else
-		last_eat = take_forks(philo->p_num, philo->fork, philo->next->fork, philo->data);
+		philo->last_eat = take_forks(philo->p_num, philo->fork, philo->next->fork, philo->data);
 	if (philo->data->c_philo > 1)
 	{
-		printf("%ld %d is eating\n", last_eat, philo->p_num + 1);
+		printf("%ld %d is eating\n", philo->last_eat, philo->p_num + 1);
 		usleep(1000 * philo->data->t_eat);
 		if (pthread_mutex_unlock(philo->next->fork))
 			clean_exit(philo->data);
+		printf("philo %d give back is right fork\n", philo->p_num + 1);
+		if (pthread_mutex_unlock(philo->fork))
+			clean_exit(philo->data);
+		printf("philo %d give back is left fork\n", philo->p_num + 1);
+
 	}
-	if (pthread_mutex_unlock(philo->fork))
+	else if (pthread_mutex_unlock(philo->fork))
 		clean_exit(philo->data);
-	return (last_eat);
 }
 
 bool	wait_to_eat(t_philo *philo, t_data *data)
 {
-	philo->last_eat = eat(philo, philo->last_eat);
-	my_gettimeofday(data->time);
-	printf("last eat %ld\n", philo->last_eat);
-	if (data->time->tv_usec - philo->last_eat >= data->t_die)
+	long	time;
+
+	eat(philo);
+	time = my_gettimeofday(data->time, data->t_start);
+	printf("%ld philo %d , last eat var %ld, last eat calcul : %ld\n", time, philo->p_num, philo->last_eat, time - philo->last_eat);
+	if (time - philo->last_eat >= data->t_die)
 	{
-		printf("%ld %d died 1\n", data->time->tv_usec - philo->data->t_start, philo->p_num + 1);
+		pthread_mutex_lock(&data->init);
+		printf("%ld %d died because he didn't eat %ld\n", time, philo->p_num + 1, philo->last_eat);
 		philo->p_status = DEAD;
 		philo->data->status = DEAD;
+		pthread_mutex_unlock(&data->init);
 		return (0);
 	}
 	else if (philo->last_eat == philo->data->t_start)
@@ -72,28 +80,26 @@ void	*life(void *arg)
 {
 	t_philo			*philo;
 	t_data			*data;
-	struct timeval	*time;
+	long			time;
 
 	data = (t_data *)arg;
 	philo = find_the_philo(data);
-	time = data->time;
 	pthread_mutex_lock(&data->init);
 	pthread_mutex_unlock(&data->init);
-	my_gettimeofday(data->time);
-	philo->last_eat = data->t_start;
-	printf("philo %d started at %ld\n",philo->p_num + 1,data->time->tv_usec - data->t_start);
+	time = my_gettimeofday(data->time, data->t_start);
+	printf("philo %d started at %ld\n",philo->p_num + 1, time);
 	while (philo->p_status == ALIVE && data->status == ALIVE)
 	{
 		if (wait_to_eat(philo, data) == SUCCES)
 		{
-			my_gettimeofday(data->time);
-			printf("%ld %d is sleeping\n",
-				   time->tv_usec - data->t_start,
-				   philo->p_num + 1);
+			my_gettimeofday(data->time, data->t_start);
+			printf("%ld %d is sleeping %d time\n",
+				  time,
+				   philo->p_num + 1, 1000 * data->t_sleep);
 			usleep(1000 * data->t_sleep);
-			my_gettimeofday(data->time);
+			time = my_gettimeofday(data->time, data->t_start);
 			printf("%ld %d is thinking\n",
-				   (time->tv_usec - data->t_start),
+				   time,
 				   philo->p_num + 1);
 		}
 	}
@@ -108,9 +114,6 @@ void	start(t_data *data)
 	philo = data->p_first;
 	i = data->c_philo;
 	data->starter_c = 0;
-	my_gettimeofday(data->time);
-	data->t_start = data->time->tv_usec;
-	my_gettimeofday(data->time);
 	pthread_mutex_lock(&data->init);
 	while (i > 0)
 	{
@@ -122,5 +125,8 @@ void	start(t_data *data)
 		philo = philo->next;
 		i--;
 	}
+	usleep(10000);
+	gettimeofday(data->time, NULL);
+	data->t_start = data->time->tv_usec / 1000 + data->time->tv_sec * 1000;
 	pthread_mutex_unlock(&data->init);
 }

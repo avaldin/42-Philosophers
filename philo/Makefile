@@ -6,14 +6,14 @@
 #    By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 15:30:58 by avaldin           #+#    #+#              #
-#    Updated: 2024/02/26 09:30:24 by avaldin          ###   ########.fr        #
+#    Updated: 2024/02/28 10:09:30 by avaldin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 		##		COMPILATION			##
 
 CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror -D_REENTRANT -g3
+FLAGS		=	-Wall -Wextra -Werror -D_REENTRANT -fsanitize=thread -g3
 
 		##		EXECUTABLE			##
 
@@ -48,7 +48,7 @@ all			:	$(NAME)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(NAME)		:	$(OBJS) Makefile
-	$(CC) $(OBJS) -o $(NAME) -lpthread
+	$(CC) $(OBJS) -o $(NAME) -lpthread  -fsanitize=thread
 
 clean		:
 	rm -f $(OBJS)

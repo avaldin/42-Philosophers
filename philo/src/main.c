@@ -6,19 +6,16 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 11:36:36 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/28 10:16:36 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-int my_gettimeofday(struct timeval *tv)
+long my_gettimeofday(struct timeval *tv, long t_start)
 {
 	if (!gettimeofday(tv, NULL))
-	{
-		tv->tv_usec = tv->tv_usec / 1000 + tv->tv_sec * 1000;
-		return (0);
-	}
+		return (tv->tv_usec / 1000 + tv->tv_sec * 1000 - t_start);
 	return (-1);
 }
 

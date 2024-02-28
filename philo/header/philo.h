@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 11:43:48 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/02/28 09:18:16 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	pars_data(t_data *data, char **argv, int argc);
 t_data	*init(char **argv, int argc);
 void	clean_exit(t_data *data);
 void	start(t_data *data);
-int 	my_gettimeofday(struct timeval *tv);
+long 	my_gettimeofday(struct timeval *tv, long t_start);
 void	wait_all_thread(t_data *data);
 long	take_forks(int p_num, pthread_mutex_t *first_f, pthread_mutex_t *second_f, t_data *data);
 

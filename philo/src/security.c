@@ -30,7 +30,7 @@ void	philosofree(t_philo *philo, int p_count)
 
 void	clean_exit(t_data *data)
 {
-
+	printf("exit\n");
 	philosofree(data->p_first, data->c_philo);
 	//fork_free;
 	free(data);
