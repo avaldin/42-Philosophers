@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 11:36:39 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 16:22:16 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:42:40 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,29 @@
 
 int	eat_enought(t_data *data)
 {
+	t_philo *philo;
+	int 	i;
+	int 	c_satisfied;
 
+	if (data->status == SATISFIED)
+		return (SATISFIED);
+	c_satisfied = 0;
+	i = data->c_philo;
+	philo = data->p_first;
+	while (i > 0)
+	{
+		if (philo->eat_c >= data->c_end && data->c_end != -1)
+			c_satisfied++;
+		philo = philo->next;
+		i--;
+	}
+	if (c_satisfied == data->c_philo)
+	{
+		data->status = SATISFIED;
+		printf("all philosopher eated enought.\n");
+		return (SATISFIED);
+	}
+	return (ALIVE);
 }
 
 long	take_forks(t_philo *philo, t_data *data)
@@ -51,6 +73,11 @@ bool	is_dead(t_philo *philo, t_data *data)
 
 	time = my_gettimeofday(data->time, data->t_start);
 	pthread_mutex_lock(&data->init);
+	if (eat_enought(data) == SATISFIED)
+	{
+		pthread_mutex_unlock(&data->init);
+		return (1);
+	}
 	if (time - philo->last_eat > data->t_die)
 	{
 		printf("%ld %d died\n", time, philo->p_num + 1);

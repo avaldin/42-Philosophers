@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 14:10:34 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:29:06 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 
 # define DEAD 0
 # define ALIVE 1
-# define FAIL 0
-# define SUCCES 1
+# define SATISFIED 2
 
 typedef struct	s_philo
 {
@@ -48,7 +47,7 @@ typedef	struct s_data
 	int 			t_die;
 	int 			t_sleep;
 	int 			t_eat;
-	bool			status;
+	int 			status;
 	pthread_mutex_t init;
 	struct s_philo	*p_first;
 }						t_data;

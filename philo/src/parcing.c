@@ -20,6 +20,8 @@ void	pars_data(t_data *data, char **argv, int argc)
 	data->t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->c_end = ft_atoi(argv[5]);
+	else
+		data->c_end = -1;
 	if (data->c_philo < 1 || data->t_die < 1 || data->t_eat < 0 || data->t_sleep < 0)
 	{
 		free(data);

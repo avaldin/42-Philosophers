@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 16:19:16 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:13:50 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	eat(t_philo *philo, long eating_time)
 		return (-1);
 	}
 	printf("%ld %d is eating\n", eating_time, philo->p_num + 1);
-	philo->eat_c
+	philo->eat_c++;
 	philo->last_eat = eating_time;
 	usleep(1000 * philo->data->t_eat);
 	give_back_forks(philo, philo->data);
