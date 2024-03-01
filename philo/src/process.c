@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/01 11:13:50 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/01 17:12:07 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,19 @@
 
 int	eat(t_philo *philo, long eating_time)
 {
-	if (is_dead(philo, philo->data))
+	if (give_status(philo->data) != ALIVE)
 	{
 		give_back_forks(philo, philo->data);
 		return (-1);
 	}
 	printf("%ld %d is eating\n", eating_time, philo->p_num + 1);
+	pthread_mutex_lock(&philo->m_eat);
 	philo->eat_c++;
 	philo->last_eat = eating_time;
+	pthread_mutex_unlock(&philo->m_eat);
 	usleep(1000 * philo->data->t_eat);
 	give_back_forks(philo, philo->data);
-	if (is_dead(philo, philo->data))
+	if (give_status(philo->data) != ALIVE)
 		return (-1);
 	return (0);
 }
@@ -35,7 +37,7 @@ t_philo	*find_the_philo(t_data *data)
 	t_philo	*philo;
 
 	philo = data->p_first;
-	if (pthread_mutex_lock(data->p_first->fork))
+	if (pthread_mutex_lock(&data->p_first->fork))
 		clean_exit(data);
 	i = data->starter_c;
 	while (i > 0)
@@ -45,7 +47,7 @@ t_philo	*find_the_philo(t_data *data)
 	}
 	data->starter_c++;
 	philo->p_status = ALIVE;
-	if (pthread_mutex_unlock(data->p_first->fork))
+	if (pthread_mutex_unlock(&data->p_first->fork))
 		clean_exit(data);
 	return (philo);
 }
@@ -53,15 +55,13 @@ t_philo	*find_the_philo(t_data *data)
 int	sleep_n_think(t_philo *philo, t_data *data)
 {
 	printf("%ld %d is sleeping\n",
-		   my_gettimeofday(data->time, data->t_start),
-		   philo->p_num + 1);
+		my_gettimeofday(data),
+		philo->p_num + 1);
 	usleep(1000 * data->t_sleep);
-	if (is_dead(philo, data))
+	if (give_status(data) != ALIVE)
 		return (-1);
 	printf("%ld %d is thinking\n",
-		   my_gettimeofday(data->time, data->t_start), philo->p_num + 1);
-	if (is_dead(philo, data))
-		return (-1);
+		my_gettimeofday(data), philo->p_num + 1);
 	return (0);
 }
 
@@ -72,26 +72,28 @@ void	*life(void *arg)
 
 	data = (t_data *)arg;
 	philo = find_the_philo(data);
+	pthread_mutex_lock(&philo->m_eat);
+	philo->last_eat = 0;
+	pthread_mutex_unlock(&philo->m_eat);
 	pthread_mutex_lock(&data->init);
 	pthread_mutex_unlock(&data->init);
-	philo->last_eat = 0;
 	if (data->c_philo < 2)
 		return (let_him_die(data->p_first, data));
 	while (42)
 	{
-		if (take_forks(philo, data) == -1)
-			return (DEAD);
-		if (eat(philo, my_gettimeofday(data->time, data->t_start)) == -1)
+		take_forks(philo, data);
+		if (eat(philo, my_gettimeofday(data)) == -1)
 			return (DEAD);
 		if (sleep_n_think(philo, data) == -1)
 			return (DEAD);
 		usleep(500);
 	}
+
 }
 
 void	start(t_data *data)
 {
-	int 			i;
+	int				i;
 	t_philo			*philo;
 
 	philo = data->p_first;
@@ -112,4 +114,5 @@ void	start(t_data *data)
 	gettimeofday(data->time, NULL);
 	data->t_start = data->time->tv_usec / 1000 + data->time->tv_sec * 1000;
 	pthread_mutex_unlock(&data->init);
+	wait_the_end(data);
 }

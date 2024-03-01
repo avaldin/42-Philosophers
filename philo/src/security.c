@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 11:43:48 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/01 15:59:51 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	philosofree(t_philo *philo, int p_count)
 {
 	t_philo	*next;
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (i < p_count)
 	{
 		next = philo->next;
-		pthread_mutex_destroy(philo->fork);
+		pthread_mutex_destroy(&philo->fork);
 		free(philo);
 		philo = next;
 		i++;
@@ -32,16 +32,24 @@ void	clean_exit(t_data *data)
 {
 	printf("exit\n");
 	philosofree(data->p_first, data->c_philo);
-	//fork_free;
 	free(data);
 	exit(2);
+}
+
+void	init_philo_utils(t_philo *philo, int i, t_data *data)
+{
+	philo->p_num = i;
+	philo->p_status = DEAD;
+	pthread_mutex_init(&philo->m_eat, NULL);
+	pthread_mutex_init(&philo->fork, NULL);
+	philo->data = data;
 }
 
 void	init_philo(t_data *data)
 {
 	t_philo	*philo;
 	t_philo	*p_prev;
-	int 	i;
+	int		i;
 
 	i = 0;
 	while (i < data->c_philo)
@@ -50,11 +58,7 @@ void	init_philo(t_data *data)
 		if (!philo)
 			clean_exit(data);
 		ft_bzero(philo, sizeof(t_philo));
-		philo->fork = malloc(sizeof(pthread_mutex_t));
-		philo->p_num = i;
-		philo->p_status = DEAD;
-		pthread_mutex_init(philo->fork, NULL);
-		philo->data = data;
+		init_philo_utils(philo, i, data);
 		if (i)
 			p_prev->next = philo;
 		else

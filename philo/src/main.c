@@ -6,23 +6,54 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/28 12:01:10 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/01 16:46:19 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-long my_gettimeofday(struct timeval *tv, long t_start)
+void	wait_the_end(t_data *data)
 {
-	if (!gettimeofday(tv, NULL))
-		return (tv->tv_usec / 1000 + tv->tv_sec * 1000 - t_start);
+	t_philo	*philo;
+	long	time;
+
+	philo = data->p_first;
+	while (give_status(data) == ALIVE)
+	{
+		pthread_mutex_lock(&philo->m_eat);
+		time = my_gettimeofday(data) - philo->last_eat;
+		pthread_mutex_unlock(&philo->m_eat);
+		eat_enought(data);
+		if (time > data->t_die)
+		{
+			pthread_mutex_lock(&data->m_status);
+			data->status = DEAD;
+			printf("%ld %d died\n", time, philo->p_num + 1);
+			pthread_mutex_unlock(&data->m_status);
+		}
+		usleep(500);
+		philo = philo->next;
+	}
+}
+
+long	my_gettimeofday(t_data *data)
+{
+	long	time;
+	int 	secu;
+
+	//pthread_mutex_lock(&data->m_time);
+	secu = gettimeofday(data->time, NULL);
+	time = data->time->tv_usec / 1000 + data->time->tv_sec * 1000 - data->t_start;
+	//pthread_mutex_unlock(&data->m_time);
+	if (!secu)
+		return (time);
 	return (-1);
 }
 
 void	thrend(t_data *data)
 {
 	t_philo	*philo;
-	int 	i;
+	int		i;
 
 	i = data->c_philo;
 	philo = data->p_first;
@@ -35,13 +66,13 @@ void	thrend(t_data *data)
 	i = data->c_philo;
 	while (i > 0)
 	{
-		pthread_mutex_destroy(philo->fork);
+		pthread_mutex_destroy(&philo->fork);
 		i--;
 		philo = philo->next;
 	}
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	*data;
 
@@ -55,43 +86,3 @@ int main(int argc, char **argv)
 	thrend(data);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//void *vie(void *status)
-//{
-//	usleep(10000000);
-//	*(bool *)status = DEAD;
-//	return (NULL);
-//}
-//
-//int main(void)
-//{
-//	bool		*status;
-//	pthread_t	p_vie;
-//
-//	status = malloc(sizeof(bool));
-//	if (!status)
-//		return (1);
-//	*status = ALIVE;
-//	if (pthread_create(&p_vie, NULL, vie, status))
-//		return (1);
-//	printf("la vie va bien\n");
-//	pthread_join(p_vie, NULL);
-//	printf("MORT\n");
-//	free(status);
-//	return (0);
-//}

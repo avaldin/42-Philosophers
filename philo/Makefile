@@ -31,6 +31,7 @@ SOURCES		=	src/main.c\
 				src/process.c\
 				src/process_2.c\
 				src/security.c\
+				src/mutex.c\
 				src/libft/ft_atoi.c\
 				src/libft/ft_bzero.c\
 
