@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/01 15:59:51 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/04 08:48:53 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	philosofree(t_philo *philo, int p_count)
 
 void	clean_exit(t_data *data)
 {
-	printf("exit\n");
 	philosofree(data->p_first, data->c_philo);
+	free(data->time);
 	free(data);
 	exit(2);
 }

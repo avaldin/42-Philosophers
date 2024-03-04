@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/01 16:46:19 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/04 08:46:02 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	wait_the_end(t_data *data)
 			printf("%ld %d died\n", time, philo->p_num + 1);
 			pthread_mutex_unlock(&data->m_status);
 		}
-		usleep(500);
 		philo = philo->next;
 	}
 }
@@ -84,5 +83,6 @@ int	main(int argc, char **argv)
 		clean_exit(data);
 	start(data);
 	thrend(data);
+	clean_exit(data);
 	return (0);
 }
