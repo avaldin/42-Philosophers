@@ -6,19 +6,17 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 11:36:39 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 09:30:35 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:23:15 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-
-
 void	p_fork(t_philo *philo, t_data *data)
 {
 	pthread_mutex_lock(&data->m_print);
 	printf("%ld %d has taken a fork\n",
-		   my_gettimeofday(data), philo->p_num + 1);
+		my_gettimeofday(data), philo->p_num + 1);
 	pthread_mutex_unlock(&data->m_print);
 }
 

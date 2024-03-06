@@ -52,8 +52,6 @@ int	sleep_n_think(t_philo *philo, t_data *data)
 	return (0);
 }
 
-
-
 void	*life(void *arg)
 {
 	t_philo			*philo;

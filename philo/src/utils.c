@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 15:27:17 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 10:18:44 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:23:15 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_philo	*find_the_philo(t_data *data)
 	return (philo);
 }
 
-int time_to_die(t_philo *philo, t_data *data, long time)
+int	time_to_die(t_philo *philo, t_data *data, long time)
 {
 	if (time > data->t_die)
 	{
@@ -78,5 +78,3 @@ int	eat_enought(t_philo *philo, t_data *data, int eating)
 	pthread_mutex_unlock(&philo->m_eat);
 	return (0);
 }
-
-

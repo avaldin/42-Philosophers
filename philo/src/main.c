@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 11:26:00 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:23:15 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	wait_the_end(t_data *data)
 {
 	t_philo	*philo;
 	long	time;
-	int 	eating;
+	int		eating;
 
 	philo = data->p_first;
 	eating = data->c_philo;
@@ -75,20 +75,3 @@ int	main(int argc, char **argv)
 	clean_exit(data);
 	return (0);
 }
-
-
-
-
-
-//philo = malloc(sizeof(t_philo));
-//if (!philo)
-//clean_exit(data);
-//ft_bzero(philo, sizeof(t_philo));
-//init_philo_utils(philo, i, data);
-//if (i)
-//p_prev->next = philo;
-//else
-//data->p_first = philo;
-//p_prev = philo;
-//philo = philo->next;
-//i++

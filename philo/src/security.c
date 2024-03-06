@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 11:26:00 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:23:15 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	philosofree(t_data *data)
 {
 	t_philo	*next;
-	t_philo *philo;
+	t_philo	*philo;
 	int		i;
 
 	i = 0;
@@ -42,15 +42,14 @@ void	clean_exit(t_data *data)
 	exit(2);
 }
 
-t_philo  *ft_lstnew(t_data *data, int i)
+t_philo	*ft_lstnew(t_data *data, int i)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
 	ft_bzero(philo, sizeof(t_philo));
-
 	philo->p_num = i;
 	philo->p_status = DEAD;
 	pthread_mutex_init(&philo->m_eat, NULL);

@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 08:57:18 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 09:10:30 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_data
 	int				t_sleep;
 	int				t_eat;
 	int				status;
-	pthread_mutex_t m_print;
+	pthread_mutex_t	m_print;
 	pthread_mutex_t	init;
 	pthread_mutex_t	m_status;
 	struct s_philo	*p_first;
@@ -70,7 +70,6 @@ void	wait_the_end(t_data *data);
 int		give_status(t_data *data);
 int		eat_enought(t_philo *philo, t_data *data, int eating);
 t_philo	*find_the_philo(t_data *data);
-int 	time_to_die(t_philo *philo, t_data *data, long time);
-
+int		time_to_die(t_philo *philo, t_data *data, long time);
 
 #endif
