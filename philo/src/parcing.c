@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:52:29 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/01 12:54:11 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 10:06:50 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	pars_data(t_data *data, char **argv, int argc)
 	if (data->c_philo < 1 || data->t_die < 1
 		|| data->t_eat < 0 || data->t_sleep < 0)
 	{
+		free(data->time);
 		free(data);
 		printf("bad arguments\n");
 		exit(3);

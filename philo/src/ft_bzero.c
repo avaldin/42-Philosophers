@@ -6,11 +6,11 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 12:19:34 by avaldin           #+#    #+#             */
-/*   Updated: 2024/02/26 09:32:00 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/04 15:30:18 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/philo.h"
+#include "../header/philo.h"
 
 void	ft_bzero(void *s, size_t n)
 {

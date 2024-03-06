@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/04 08:46:02 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 11:26:00 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,17 @@ void	wait_the_end(t_data *data)
 {
 	t_philo	*philo;
 	long	time;
+	int 	eating;
 
 	philo = data->p_first;
+	eating = data->c_philo;
 	while (give_status(data) == ALIVE)
 	{
 		pthread_mutex_lock(&philo->m_eat);
 		time = my_gettimeofday(data) - philo->last_eat;
 		pthread_mutex_unlock(&philo->m_eat);
-		eat_enought(data);
-		if (time > data->t_die)
-		{
-			pthread_mutex_lock(&data->m_status);
-			data->status = DEAD;
-			printf("%ld %d died\n", time, philo->p_num + 1);
-			pthread_mutex_unlock(&data->m_status);
-		}
+		eating -= eat_enought(philo, data, eating);
+		time_to_die(philo, data, time);
 		philo = philo->next;
 	}
 }
@@ -38,12 +34,11 @@ void	wait_the_end(t_data *data)
 long	my_gettimeofday(t_data *data)
 {
 	long	time;
-	int 	secu;
+	int		secu;
 
-	//pthread_mutex_lock(&data->m_time);
 	secu = gettimeofday(data->time, NULL);
-	time = data->time->tv_usec / 1000 + data->time->tv_sec * 1000 - data->t_start;
-	//pthread_mutex_unlock(&data->m_time);
+	time = data->time->tv_usec / 1000
+		+ data->time->tv_sec * 1000 - data->t_start;
 	if (!secu)
 		return (time);
 	return (-1);
@@ -58,14 +53,8 @@ void	thrend(t_data *data)
 	philo = data->p_first;
 	while (i > 0)
 	{
-		pthread_join(philo->philo, NULL);
-		i--;
-		philo = philo->next;
-	}
-	i = data->c_philo;
-	while (i > 0)
-	{
-		pthread_mutex_destroy(&philo->fork);
+		if (pthread_join(philo->philo, NULL))
+			exit(1);
 		i--;
 		philo = philo->next;
 	}
@@ -86,3 +75,20 @@ int	main(int argc, char **argv)
 	clean_exit(data);
 	return (0);
 }
+
+
+
+
+
+//philo = malloc(sizeof(t_philo));
+//if (!philo)
+//clean_exit(data);
+//ft_bzero(philo, sizeof(t_philo));
+//init_philo_utils(philo, i, data);
+//if (i)
+//p_prev->next = philo;
+//else
+//data->p_first = philo;
+//p_prev = philo;
+//philo = philo->next;
+//i++
