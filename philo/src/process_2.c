@@ -57,6 +57,7 @@ void	*let_him_die(t_philo *philo, t_data *data)
 			pthread_mutex_unlock(&philo->fork);
 			return (0);
 		}
+		pthread_mutex_unlock(&data->m_status);
 		usleep(5000);
 	}
 }

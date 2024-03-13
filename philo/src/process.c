@@ -6,7 +6,7 @@
 /*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 10:17:01 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:38:18 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int	eat(t_philo *philo, long eating_time)
 	pthread_mutex_lock(&philo->data->m_print);
 	printf("%ld %d is eating\n", eating_time, philo->p_num + 1);
 	pthread_mutex_unlock(&philo->data->m_print);
-	usleep(1000 * philo->data->t_eat);
 	pthread_mutex_lock(&philo->m_eat);
 	philo->eat_c++;
 	philo->last_eat = eating_time;
 	pthread_mutex_unlock(&philo->m_eat);
+	usleep(1000 * philo->data->t_eat);
 	give_back_forks(philo, philo->data);
 	if (give_status(philo->data) != ALIVE)
 		return (-1);
