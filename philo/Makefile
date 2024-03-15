@@ -35,7 +35,7 @@ SOURCES		=	main.c\
 				ft_atoi.c\
 				ft_bzero.c\
 
-HEAD		=	header/philo.h
+HEADER		=	header/philo.h
 
 		##		OBJECTS				##
 

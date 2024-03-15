@@ -15,8 +15,9 @@
 void	p_fork(t_philo *philo, t_data *data)
 {
 	pthread_mutex_lock(&data->m_print);
-	printf("%ld %d has taken a fork\n",
-		my_gettimeofday(data), philo->p_num + 1);
+	if (give_status(data) == ALIVE)
+		printf("%ld %d has taken a fork\n",
+			my_gettimeofday(data), philo->p_num + 1);
 	pthread_mutex_unlock(&data->m_print);
 }
 
