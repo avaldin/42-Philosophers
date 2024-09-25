@@ -27,7 +27,6 @@ OBJ_PATH	=	.obj/
 		##		SOURCES_FILES		##
 
 SOURCES		=	main.c\
-				parcing.c\
 				process.c\
 				process_2.c\
 				security.c\

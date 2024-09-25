@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   security.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 12:23:15 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/25 11:59:13 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,24 @@ void	init_philo(t_data *data)
 	philo->next = data->p_first;
 }
 
-t_data	*init(char **argv, int argc)
+void	init_data(char **argv, int argc, t_data *data)
 {
-	t_data		*data;
-
-	data = NULL;
-	data = malloc(sizeof(t_data));
-	if (!data)
-	{
-		printf("data malloc failed\n");
-		exit(EXIT_FAILURE);
-	}
 	ft_bzero(data, sizeof(t_data));
-	data->time = malloc(sizeof(struct timeval));
-	pars_data(data, argv, argc);
+	data->c_philo = ft_atoi(argv[1]);
+	data->t_die = ft_atoi(argv[2]);
+	data->t_eat = ft_atoi(argv[3]);
+	data->t_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->c_end = ft_atoi(argv[5]);
+	if (data->c_philo < 1 || data->t_die < 1
+		|| data->t_eat < 0 || data->t_sleep < 0 || (argc == 6
+		&& data->c_end < 1))
+	{
+		printf("bad arguments\n");
+		exit(3);
+	}
 	init_philo(data);
 	if (!data->p_first)
 		clean_exit(data);
 	data->status = ALIVE;
-	return (data);
 }

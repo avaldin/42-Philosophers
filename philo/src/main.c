@@ -12,6 +12,8 @@
 
 #include "../header/philo.h"
 
+void init_data(char **pString, int argc, t_data *pData);
+
 void	wait_the_end(t_data *data)
 {
 	t_philo	*philo;
@@ -62,12 +64,11 @@ void	thrend(t_data *data)
 
 int	main(int argc, char **argv)
 {
-	t_data	*data;
+	t_data	data;
 
 	if (argc < 5 || argc > 6)
 		return (-1);
-	data = NULL;
-	data = init(argv, argc);
+	init_data(argv, argc, &data);
 	if (!data)
 		clean_exit(data);
 	start(data);

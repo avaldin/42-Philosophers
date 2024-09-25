@@ -40,7 +40,7 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	struct timeval	*time;
+	struct timeval	time;
 	int				starter_c;
 	long			t_start;
 	int				c_philo;
@@ -59,7 +59,7 @@ int		ft_atoi(const char *nptr);
 void	ft_bzero(void *s, size_t n);
 
 void	pars_data(t_data *data, char **argv, int argc);
-t_data	*init(char **argv, int argc);
+void	init_data(char **argv, int argc, t_data *data);
 void	clean_exit(t_data *data);
 void	start(t_data *data);
 long	my_gettimeofday(t_data *data);
