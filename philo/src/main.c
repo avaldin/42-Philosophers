@@ -3,33 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+        */
+/*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/03/06 12:23:15 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/25 16:06:20 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void init_data(char **pString, int argc, t_data *pData);
-
 void	wait_the_end(t_data *data)
 {
-	t_philo	*philo;
 	long	time;
 	int		eating;
+	int		i;
 
-	philo = data->p_first;
+	i = 0;
 	eating = data->c_philo;
-	while (give_status(data) == ALIVE)
+	while (get_status(data) == ALIVE)
 	{
-		pthread_mutex_lock(&philo->m_eat);
-		time = my_gettimeofday(data) - philo->last_eat;
-		pthread_mutex_unlock(&philo->m_eat);
-		eating -= eat_enought(philo, data, eating);
-		time_to_die(philo, data, time);
-		philo = philo->next;
+		pthread_mutex_lock(&data->philo[i].m_eat);
+		time = my_gettimeofday(data) - data->philo[i].last_eat;
+		pthread_mutex_unlock(&data->philo[i].m_eat);
+		eating -= eat_enought(&data->philo[i], data, eating);
+		time_to_die(&data->philo[i], data, time);
+		if (i >= data->c_philo)
+			i = 0;
+		else
+			i++;
 	}
 }
 
@@ -38,9 +39,11 @@ long	my_gettimeofday(t_data *data)
 	long	time;
 	int		secu;
 
-	secu = gettimeofday(data->time, NULL);
-	time = data->time->tv_usec / 1000
-		+ data->time->tv_sec * 1000 - data->t_start;
+	secu = gettimeofday(&data->time, NULL);
+	pthread_mutex_lock(&data->m_time);
+	time = data->time.tv_usec / 1000
+		+ data->time.tv_sec * 1000 - data->t_start;
+	pthread_mutex_unlock(&data->m_time);
 	if (!secu)
 		return (time);
 	return (-1);
@@ -48,17 +51,14 @@ long	my_gettimeofday(t_data *data)
 
 void	thrend(t_data *data)
 {
-	t_philo	*philo;
 	int		i;
 
-	i = data->c_philo;
-	philo = data->p_first;
-	while (i > 0)
+	i = 0;
+	while (i < data->c_philo)
 	{
-		if (pthread_join(philo->philo, NULL))
+		if (pthread_join(data->philo[i].philo, NULL))
 			exit(1);
-		i--;
-		philo = philo->next;
+		i++;
 	}
 }
 
@@ -69,10 +69,8 @@ int	main(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 		return (-1);
 	init_data(argv, argc, &data);
-	if (!data)
-		clean_exit(data);
-	start(data);
-	thrend(data);
-	clean_exit(data);
+	start(&data);
+	thrend(&data);
+	clean_exit(&data);
 	return (0);
 }

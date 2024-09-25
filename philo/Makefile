@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: avaldin <avaldin@student.42lyon.fr>        +#+  +:+       +#+         #
+#    By: avaldin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/07 15:30:58 by avaldin           #+#    #+#              #
-#    Updated: 2024/03/06 08:56:48 by avaldin          ###   ########.fr        #
+#    Updated: 2024/09/25 13:35:08 by avaldin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SOURCES		=	main.c\
 				utils.c\
 				ft_atoi.c\
 				ft_bzero.c\
+				mutex.c\
 
 HEADER		=	header/philo.h
 
