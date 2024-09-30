@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/30 11:01:10 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 11:12:39 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	eat(t_philo *philo, t_data *data)
 {
-	long time;
+	long	time;
 
 	time = my_gettimeofday(data);
 	if (get_status(data) != ALIVE)
@@ -55,8 +55,8 @@ void	*life(void *arg)
 	philo = find_the_philo(data);
 	pthread_mutex_lock(&data->init);
 	pthread_mutex_unlock(&data->init);
-	if (data->c_philo < 2) // todo peut etre data race a cause de cphilo
-		return (let_him_die(&data->philo[0], data)); //todo
+	if (data->c_philo < 2)
+		return (let_him_die(&data->philo[0], data));
 	if (philo->p_num % 2 != 0)
 	{
 		m_printf("is thinking", philo->p_num, data);
@@ -64,10 +64,9 @@ void	*life(void *arg)
 	}
 	while (42)
 	{
-		if (get_status(data) == ALIVE)
-			take_forks(philo->p_num, data);
-		else
+		if (get_status(data) != ALIVE)
 			return (DEAD);
+		take_forks(philo->p_num, data);
 		if (eat(philo, data) == -1)
 			return (DEAD);
 		if (sleep_n_think(philo, data) == -1)

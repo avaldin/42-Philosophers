@@ -28,7 +28,7 @@
 typedef struct s_fork
 {
 	bool			taken;
-	pthread_mutex_t mutex;
+	pthread_mutex_t	mutex;
 }				t_fork;
 
 typedef struct s_philo
@@ -36,7 +36,7 @@ typedef struct s_philo
 	int				p_num;
 	int				eat_c;
 	long			last_eat;
-	int 			status;
+	int				status;
 	pthread_mutex_t	m_eat;
 	pthread_t		philo;
 }						t_philo;

@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:34:50 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/30 10:01:49 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 11:09:03 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ int	get_status(t_data *data)
 
 void	m_printf(char *str, int p_num, t_data *data)
 {
-	long time;
-
 	if (get_status(data) == ALIVE)
 	{
-		time = my_gettimeofday(data);
 		pthread_mutex_lock(&data->m_print);
-		printf("%ld %d %s\n", time, p_num + 1, str);
+		printf("%ld %d %s\n", my_gettimeofday(data), p_num + 1, str);
 		pthread_mutex_unlock(&data->m_print);
 	}
 }

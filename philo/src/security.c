@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/30 10:36:03 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 11:15:36 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	init_data(char **argv, int argc, t_data *data)
 	data->t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->c_end = ft_atoi(argv[5]);
-	if (data->c_philo < 1 || data->t_die < 1
+	if (data->c_philo < 1 || data->c_philo > 200 || data->t_die < 1
 		|| data->t_eat < 0 || data->t_sleep < 0 || (argc == 6
-		&& data->c_end < 1))
+			&& data->c_end < 1))
 	{
 		printf("bad arguments\n");
 		exit(3);
