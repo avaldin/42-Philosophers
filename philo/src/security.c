@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/30 09:02:28 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 10:36:03 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	mutex_destroyer(t_data *data)
 
 	i = -1;
 	while (++i < data->c_philo)
-		pthread_mutex_destroy(&data->philo[i].fork[0].mutex);
+		pthread_mutex_destroy(&data->fork[i].mutex);
 	pthread_mutex_destroy(&data->init);
 	pthread_mutex_destroy(&data->m_print);
 	pthread_mutex_destroy(&data->m_time);
@@ -38,15 +38,12 @@ void	init_table(t_data *data)
 	i = 0;
 	while (i < data->c_philo - 1)
 	{
-		data->philo[i].fork[0] = data->fork[i];
-		data->philo[i].fork[1] = data->fork[i + 1];
 		pthread_mutex_init(&data->fork[i].mutex, NULL);
 		data->philo[i].p_num = i;
 		data->philo[i].status = ALIVE;
 		i++;
 	}
-	data->philo[i].fork[0] = data->fork[i];
-	data->philo[i].fork[1] = data->fork[0];
+	data->fork[data->c_philo + 1] = data->fork[0];
 	data->philo[i].p_num = i;
 	data->philo[i].status = ALIVE;
 	pthread_mutex_init(&data->fork[i].mutex, NULL);

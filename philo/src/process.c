@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/30 10:22:14 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 11:01:10 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ int	eat(t_philo *philo, t_data *data)
 		return (-1);
 	}
 	m_printf("is eating", philo->p_num, data);
-	usleep(1000 * data->t_eat); //todo mutex le t_eat peut etre
+	pthread_mutex_lock(&philo->m_eat);
+	philo->last_eat = time;
+	pthread_mutex_unlock(&philo->m_eat);
+	usleep(1000 * data->t_eat);
 	pthread_mutex_lock(&philo->m_eat);
 	philo->eat_c++;
-	philo->last_eat = time;
 	pthread_mutex_unlock(&philo->m_eat);
 	fork_give_back(data, philo->p_num);
 	if (get_status(data) != ALIVE)
@@ -57,9 +59,7 @@ void	*life(void *arg)
 		return (let_him_die(&data->philo[0], data)); //todo
 	if (philo->p_num % 2 != 0)
 	{
-		pthread_mutex_lock(&data->m_print);
-		printf("0 %d is thinking\n", philo->p_num + 1);
-		pthread_mutex_unlock(&data->m_print);
+		m_printf("is thinking", philo->p_num, data);
 		usleep(100);
 	}
 	while (42)

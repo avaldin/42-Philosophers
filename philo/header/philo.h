@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/30 09:21:40 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 10:36:03 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ typedef struct s_philo
 	int 			status;
 	pthread_mutex_t	m_eat;
 	pthread_t		philo;
-	struct s_fork	fork[2];
-	struct s_data	*data;
 }						t_philo;
 
 typedef struct s_data
@@ -59,7 +57,7 @@ typedef struct s_data
 	pthread_mutex_t	m_time;
 	pthread_mutex_t	m_status;
 	struct s_philo	philo[200];
-	struct s_fork	fork[200];
+	struct s_fork	fork[201];
 }						t_data;
 
 int		ft_atoi(const char *nptr);

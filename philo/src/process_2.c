@@ -38,8 +38,10 @@ void	*let_him_die(t_philo *philo, t_data *data)
 {
 	if (pthread_mutex_lock(&data->fork[0].mutex))
 		clean_exit(data);
+	pthread_mutex_lock(&data->m_print);
 	printf("%ld %d has taken a fork\n",
 		my_gettimeofday(data), philo->p_num + 1);
+	pthread_mutex_unlock(&data->m_print);
 	while (42)
 	{
 		pthread_mutex_lock(&data->m_status);
