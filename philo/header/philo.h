@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 11:32:07 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/25 15:33:10 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 09:21:40 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_data
 	int				t_die;
 	int				t_sleep;
 	int				t_eat;
-	bool			status;
+	int				status;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	init;
 	pthread_mutex_t	m_time;
@@ -69,10 +69,10 @@ void	init_data(char **argv, int argc, t_data *data);
 void	clean_exit(t_data *data);
 void	start(t_data *data);
 long	my_gettimeofday(t_data *data);
-void	take_forks(t_philo *philo, t_data *data);
+void	take_forks(int p_num, t_data *data);
 bool	fork_try_take(t_fork *fork);
 void	*let_him_die(t_philo *philo, t_data *data);
-void	fork_give_back(t_philo *philo);
+void	fork_give_back(t_data *data, int p_num);
 void	wait_the_end(t_data *data);
 int		get_status(t_data *data);
 void	m_printf(char *str, int p_num, t_data *data);

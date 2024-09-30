@@ -6,31 +6,31 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 11:36:39 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/25 15:49:24 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 09:18:38 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	take_forks(t_philo *philo, t_data *data)
+void	take_forks(int p_num, t_data *data)
 {
-	if (philo->p_num % 2 == 0)
+	if (p_num % 2 == 0)
 	{
-		while (fork_try_take(&philo->fork[1]) == false)
+		while (fork_try_take(&data->fork[p_num + 1]) == false)
 			usleep(10);
-		m_printf("has taken a fork", philo->p_num, data);
-		while (fork_try_take(&philo->fork[0]) == false)
+		m_printf("has taken a fork", p_num, data);
+		while (fork_try_take(&data->fork[p_num]) == false)
 			usleep(10);
-		m_printf("has taken a fork", philo->p_num, data);
+		m_printf("has taken a fork", p_num, data);
 	}
 	else
 	{
-		while (fork_try_take(&philo->fork[0]) == false)
+		while (fork_try_take(&data->fork[p_num]) == false)
 			usleep(10);
-		m_printf("has taken a fork", philo->p_num, data);
-		while (fork_try_take(&philo->fork[1]) == false)
+		m_printf("has taken a fork", p_num, data);
+		while (fork_try_take(&data->fork[p_num + 1]) == false)
 			usleep(10);
-		m_printf("has taken a fork", philo->p_num, data);
+		m_printf("has taken a fork", p_num, data);
 	}
 }
 

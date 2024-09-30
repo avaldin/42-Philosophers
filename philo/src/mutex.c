@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:34:50 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/25 14:03:12 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 10:01:49 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ bool	fork_try_take(t_fork *fork)
 	return (available);
 }
 
-void	fork_give_back(t_philo *philo)
+void	fork_give_back(t_data *data, int p_num)
 {
-	pthread_mutex_lock(&philo->fork[0].mutex);
-	if (philo->fork[0].taken)
-		philo->fork[0].taken = false;
-	pthread_mutex_unlock(&philo->fork[0].mutex);
-	pthread_mutex_lock(&philo->fork[1].mutex);
-	if (philo->fork[1].taken)
-		philo->fork[1].taken = false;
-	pthread_mutex_unlock(&philo->fork[1].mutex);
+	pthread_mutex_lock(&data->fork[p_num].mutex);
+	if (data->fork[p_num].taken)
+		data->fork[p_num].taken = false;
+	pthread_mutex_unlock(&data->fork[p_num].mutex);
+	pthread_mutex_lock(&data->fork[p_num + 1].mutex);
+	if (data->fork[p_num + 1].taken)
+		data->fork[p_num + 1].taken = false;
+	pthread_mutex_unlock(&data->fork[p_num + 1].mutex);
 }

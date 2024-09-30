@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:37:30 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/25 16:06:20 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 09:57:36 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	wait_the_end(t_data *data)
 		pthread_mutex_unlock(&data->philo[i].m_eat);
 		eating -= eat_enought(&data->philo[i], data, eating);
 		time_to_die(&data->philo[i], data, time);
-		if (i >= data->c_philo)
+		if (i >= data->c_philo - 1)
 			i = 0;
 		else
 			i++;

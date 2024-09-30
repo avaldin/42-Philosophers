@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:21 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/25 16:26:36 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 10:22:14 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ int	eat(t_philo *philo, t_data *data)
 	time = my_gettimeofday(data);
 	if (get_status(data) != ALIVE)
 	{
-		fork_give_back(philo);
+		fork_give_back(data, philo->p_num);
 		return (-1);
 	}
 	m_printf("is eating", philo->p_num, data);
+	usleep(1000 * data->t_eat); //todo mutex le t_eat peut etre
 	pthread_mutex_lock(&philo->m_eat);
 	philo->eat_c++;
 	philo->last_eat = time;
 	pthread_mutex_unlock(&philo->m_eat);
-	usleep(1000 * data->t_eat); //todo mutex le t_eat peut etre
-	fork_give_back(philo);
+	fork_give_back(data, philo->p_num);
 	if (get_status(data) != ALIVE)
 		return (-1);
 	return (0);
@@ -55,10 +55,17 @@ void	*life(void *arg)
 	pthread_mutex_unlock(&data->init);
 	if (data->c_philo < 2) // todo peut etre data race a cause de cphilo
 		return (let_him_die(&data->philo[0], data)); //todo
+	if (philo->p_num % 2 != 0)
+	{
+		pthread_mutex_lock(&data->m_print);
+		printf("0 %d is thinking\n", philo->p_num + 1);
+		pthread_mutex_unlock(&data->m_print);
+		usleep(100);
+	}
 	while (42)
 	{
 		if (get_status(data) == ALIVE)
-			take_forks(philo, data);
+			take_forks(philo->p_num, data);
 		else
 			return (DEAD);
 		if (eat(philo, data) == -1)

@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:51:43 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/25 16:34:25 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/09/30 09:02:28 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	init_table(t_data *data)
 	{
 		data->philo[i].fork[0] = data->fork[i];
 		data->philo[i].fork[1] = data->fork[i + 1];
-		printf("phil n =");
 		pthread_mutex_init(&data->fork[i].mutex, NULL);
 		data->philo[i].p_num = i;
 		data->philo[i].status = ALIVE;
