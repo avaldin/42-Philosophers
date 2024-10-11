@@ -6,7 +6,7 @@
 /*   By: avaldin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 13:34:50 by avaldin           #+#    #+#             */
-/*   Updated: 2024/09/30 11:09:03 by avaldin          ###   ########.fr       */
+/*   Updated: 2024/10/11 08:48:06 by avaldin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	get_status(t_data *data)
 
 void	m_printf(char *str, int p_num, t_data *data)
 {
+	pthread_mutex_lock(&data->m_print);
 	if (get_status(data) == ALIVE)
 	{
-		pthread_mutex_lock(&data->m_print);
 		printf("%ld %d %s\n", my_gettimeofday(data), p_num + 1, str);
-		pthread_mutex_unlock(&data->m_print);
 	}
+	pthread_mutex_unlock(&data->m_print);
 }
 
 bool	fork_try_take(t_fork *fork)
@@ -49,12 +49,17 @@ bool	fork_try_take(t_fork *fork)
 
 void	fork_give_back(t_data *data, int p_num)
 {
+	int	right_fork;
+
+	right_fork = p_num + 1;
+	if (p_num == data->c_philo - 1)
+		right_fork = 0;
 	pthread_mutex_lock(&data->fork[p_num].mutex);
 	if (data->fork[p_num].taken)
 		data->fork[p_num].taken = false;
 	pthread_mutex_unlock(&data->fork[p_num].mutex);
-	pthread_mutex_lock(&data->fork[p_num + 1].mutex);
-	if (data->fork[p_num + 1].taken)
-		data->fork[p_num + 1].taken = false;
-	pthread_mutex_unlock(&data->fork[p_num + 1].mutex);
+	pthread_mutex_lock(&data->fork[right_fork].mutex);
+	if (data->fork[right_fork].taken)
+		data->fork[right_fork].taken = false;
+	pthread_mutex_unlock(&data->fork[right_fork].mutex);
 }
