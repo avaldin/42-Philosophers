@@ -14,9 +14,14 @@
 
 void	take_forks(int p_num, t_data *data)
 {
+	int	right_fork;
+
+	right_fork = p_num + 1;
+	if (p_num == data->c_philo - 1)
+		right_fork = 0;
 	if (p_num % 2 == 0)
 	{
-		while (fork_try_take(&data->fork[p_num + 1]) == false)
+		while (fork_try_take(&data->fork[right_fork]) == false)
 			usleep(10);
 		m_printf("has taken a fork", p_num, data);
 		while (fork_try_take(&data->fork[p_num]) == false)
@@ -28,7 +33,7 @@ void	take_forks(int p_num, t_data *data)
 		while (fork_try_take(&data->fork[p_num]) == false)
 			usleep(10);
 		m_printf("has taken a fork", p_num, data);
-		while (fork_try_take(&data->fork[p_num + 1]) == false)
+		while (fork_try_take(&data->fork[right_fork]) == false)
 			usleep(10);
 		m_printf("has taken a fork", p_num, data);
 	}

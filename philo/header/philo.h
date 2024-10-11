@@ -57,7 +57,7 @@ typedef struct s_data
 	pthread_mutex_t	m_time;
 	pthread_mutex_t	m_status;
 	struct s_philo	philo[200];
-	struct s_fork	fork[201];
+	struct s_fork	fork[200];
 }						t_data;
 
 int		ft_atoi(const char *nptr);

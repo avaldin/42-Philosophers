@@ -36,17 +36,13 @@ void	init_table(t_data *data)
 	int	i;
 
 	i = 0;
-	while (i < data->c_philo - 1)
+	while (i < data->c_philo)
 	{
 		pthread_mutex_init(&data->fork[i].mutex, NULL);
 		data->philo[i].p_num = i;
 		data->philo[i].status = ALIVE;
 		i++;
 	}
-	data->fork[data->c_philo + 1] = data->fork[0];
-	data->philo[i].p_num = i;
-	data->philo[i].status = ALIVE;
-	pthread_mutex_init(&data->fork[i].mutex, NULL);
 }
 
 void	init_data(char **argv, int argc, t_data *data)
